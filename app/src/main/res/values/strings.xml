@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Movies and TV</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="example_lorem">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec leo sem, vehicula et egestas et, ullamcorper a nibh. Etiam iaculis ligula sed sem euismod, ac blandit ante egestas. Aliquam consectetur iaculis posuere. Donec semper maximus turpis vel tincidunt. Praesent vel vehicula est. Pellentesque tincidunt dolor quis erat placerat, sit amet consequat lectus pharetra. Donec aliquam dignissim lectus.
+    </string>
+    <string name="tab_title_movie">Movies</string>
+    <string name="tab_title_tv">TV Shows</string>
+    <string name="title_template">Ini dia judulnya aku nggak tau mungkin bisa sepanjang ini atau bisa juga lebih panjang</string>
+    <string name="rating_text">Rating :</string>
+    <string name="rating_template">7.5</string>
+    <string name="per_rating">/10</string>
+    <string name="popularity_text">Popularity</string>
+    <string name="popularity_template">50000</string>
+    <string name="genre_text">Genre</string>
+    <string name="genre_template">Romantic, Action, Motivation, Fiction, Technology</string>
+    <string name="original_language_text">Original language</string>
+    <string name="language_template">en</string>
+    <string name="adult_text">Adult</string>
+    <string name="adult_template">No</string>
+    <string name="production_company_text">Production Company</string>
+    <string name="detail_company_template">Warner Movie, Paramount Pictures, Netflix</string>
+    <string name="overview_text">Overview</string>
+    <string name="number_of_episodes_text">Number of Episodes</string>
+    <string name="episodes_template">240</string>
+    <string name="created_by_text">Created by</string>
+    <string name="created_by_template">Dick Wolf, Johannes Burg, Romance romany</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+</resources>
