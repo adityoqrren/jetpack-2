@@ -15,7 +15,7 @@ class SectionPagerAdapter(private val mContext:Context, fm:FragmentManager) : Fr
         private val TAB_TITLES = intArrayOf(R.string.tab_title_movie,R.string.tab_title_tv)
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return mContext.resources.getString(TAB_TITLES[position])
     }
 
@@ -26,5 +26,5 @@ class SectionPagerAdapter(private val mContext:Context, fm:FragmentManager) : Fr
             else -> Fragment()
         }
 
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = TAB_TITLES.size
 }

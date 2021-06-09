@@ -4,14 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import id.interconnect.moviesandtv.data.DetailTV
 import id.interconnect.moviesandtv.data.TVItem
+import id.interconnect.moviesandtv.data.MovieTVRepository
 
-class TVViewModel(val repository:MovieTVRepository): ViewModel() {
+class TVViewModel(private val repository: MovieTVRepository) : ViewModel() {
 
-    fun getPopularTV() : LiveData<List<TVItem>> {
+    fun getPopularTV(): LiveData<List<TVItem>> {
         return repository.getPopularTV()
     }
 
-    fun getDetailTV(id: Int) : LiveData<DetailTV> {
+    fun getDetailTV(id: Int): LiveData<DetailTV> {
         return repository.getDetailTV(id)
     }
 }

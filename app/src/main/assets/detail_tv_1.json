@@ -1,0 +1,117 @@
+
+{
+
+    "backdrop_path": "/dYvIUzdh6TUv4IFRq8UBkX7bNNu.jpg",
+    "created_by": [
+        {
+            "id": 1501230,
+            "credit_id": "6043e2c750733c006fc22710",
+            "name": "José Ignacio Valenzuela",
+            "gender": 0,
+            "profile_path": null
+        }
+    ],
+    "episode_run_time": [
+        40
+    ],
+    "first_air_date": "2021-03-24",
+    "genres": [
+        {
+            "id": 18,
+            "name": "Drama"
+        },
+        {
+            "id": 80,
+            "name": "Crime"
+        },
+        {
+            "id": 9648,
+            "name": "Mystery"
+        }
+    ],
+    "homepage": "https://www.netflix.com/title/81166747",
+    "id": 120168,
+    "in_production": true,
+    "languages": [
+        "de",
+        "es"
+    ],
+    "last_air_date": "2021-05-19",
+    "last_episode_to_air": {
+        "air_date": "2021-05-19",
+        "episode_number": 8,
+        "id": 2961895,
+        "name": "I Killed Sara",
+        "overview": "A videotape hidden in Sara's closet becomes a key piece of evidence that makes everyone realize they've been seeking the murderer in the wrong place.",
+        "production_code": "",
+        "season_number": 2,
+        "still_path": "/ymg3E0PjHzgfaFzMS3kecZ0ilze.jpg",
+        "vote_average": 0.0,
+        "vote_count": 0
+    },
+    "name": "Who Killed Sara?",
+    "next_episode_to_air": null,
+    "networks": [
+        {
+            "name": "Netflix",
+            "id": 213,
+            "logo_path": "/wwemzKWzjKYJFfCeiB57q3r4Bcm.png",
+            "origin_country": ""
+        }
+    ],
+    "number_of_episodes": 18,
+    "number_of_seasons": 2,
+    "origin_country": [
+        "MX"
+    ],
+    "original_language": "es",
+    "original_name": "¿Quién mató a Sara?",
+    "overview": "Hell-bent on exacting revenge and proving he was framed for his sister's murder, Álex sets out to unearth much more than the crime's real culprit.",
+    "popularity": 1181.733,
+    "poster_path": "/o7uk5ChRt3quPIv8PcvPfzyXdMw.jpg",
+    "production_companies": [ ],
+    "production_countries": [
+        {
+            "iso_3166_1": "MX",
+            "name": "Mexico"
+        }
+    ],
+    "seasons": [
+        {
+            "air_date": "2021-03-24",
+            "episode_count": 10,
+            "id": 184557,
+            "name": "Season 1",
+            "overview": "",
+            "poster_path": "/o7uk5ChRt3quPIv8PcvPfzyXdMw.jpg",
+            "season_number": 1
+        },
+        {
+            "air_date": "2021-05-19",
+            "episode_count": 8,
+            "id": 188387,
+            "name": "Season 2",
+            "overview": "",
+            "poster_path": "/hG1wscoTZO59gQ0jqWtYYZGQQ7l.jpg",
+            "season_number": 2
+        }
+    ],
+    "spoken_languages": [
+        {
+            "english_name": "German",
+            "iso_639_1": "de",
+            "name": "Deutsch"
+        },
+        {
+            "english_name": "Spanish",
+            "iso_639_1": "es",
+            "name": "Español"
+        }
+    ],
+    "status": "Returning Series",
+    "tagline": "",
+    "type": "Scripted",
+    "vote_average": 7.8,
+    "vote_count": 719
+
+}

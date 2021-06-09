@@ -1,5 +1,5 @@
 package id.interconnect.moviesandtv.data
 
-data class AllMovieResponse (
+data class AllMoviesResponse (
     val results : List<MovieItem>
 )

@@ -28,4 +28,7 @@
     <string name="created_by_template">Dick Wolf, Johannes Burg, Romance romany</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="title_movie_detail">Movie Detail</string>
+    <string name="title_tv_detail">TV Show Detail</string>
+    <string name="content_desc_imageList">Image in List</string>
 </resources>

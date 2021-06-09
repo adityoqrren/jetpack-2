@@ -1,6 +1,6 @@
-package id.interconnect.moviesandtv.data.api
+package id.interconnect.moviesandtv.data.source.remote.api
 
-import id.interconnect.moviesandtv.data.AllMovieResponse
+import id.interconnect.moviesandtv.data.AllMoviesResponse
 import id.interconnect.moviesandtv.data.AllTVResponse
 import id.interconnect.moviesandtv.data.DetailMovie
 import id.interconnect.moviesandtv.data.DetailTV
@@ -11,9 +11,9 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("movie/popular")
-    fun getPopularMovie(
+    fun getPopularMovies(
         @Query("api_key") api_key:String
-    ) : Call<AllMovieResponse>
+    ) : Call<AllMoviesResponse>
 
     @GET("movie/{id}")
     fun getDetailMovie(

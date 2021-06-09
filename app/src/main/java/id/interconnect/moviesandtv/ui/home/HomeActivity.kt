@@ -1,19 +1,21 @@
 package id.interconnect.moviesandtv.ui.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import id.interconnect.moviesandtv.R
-import kotlinx.android.synthetic.main.activity_home.*
+import androidx.appcompat.app.AppCompatActivity
+import id.interconnect.moviesandtv.databinding.ActivityHomeBinding
+
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        val activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(activityHomeBinding.root)
 
         val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager)
-        home_view_pager.adapter = sectionPagerAdapter
-        home_tablayout.setupWithViewPager(home_view_pager)
+        activityHomeBinding.homeViewPager.adapter = sectionPagerAdapter
+        activityHomeBinding.homeTablayout.setupWithViewPager(activityHomeBinding.homeViewPager)
 
         supportActionBar?.elevation = 0f
+
     }
 }

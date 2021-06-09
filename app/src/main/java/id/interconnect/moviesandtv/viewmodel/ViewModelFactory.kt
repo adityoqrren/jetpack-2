@@ -2,7 +2,7 @@ package id.interconnect.moviesandtv.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import id.interconnect.moviesandtv.data.api.MovieTVRepository
+import id.interconnect.moviesandtv.data.MovieTVRepository
 import id.interconnect.moviesandtv.di.Injection
 import id.interconnect.moviesandtv.ui.movies.MovieViewModel
 import id.interconnect.moviesandtv.ui.tv.TVViewModel

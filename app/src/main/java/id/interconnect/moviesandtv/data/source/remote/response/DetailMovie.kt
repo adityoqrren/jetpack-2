@@ -1,6 +1,7 @@
 package id.interconnect.moviesandtv.data
 
 data class DetailMovie (
+    val id:Int,
     val genres:List<Genre>,
     val original_language:String,
     val original_title:String,

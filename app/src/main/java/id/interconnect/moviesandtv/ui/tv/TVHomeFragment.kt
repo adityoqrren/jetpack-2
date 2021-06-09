@@ -2,55 +2,53 @@ package id.interconnect.moviesandtv.ui.tv
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import id.interconnect.moviesandtv.R
+import id.interconnect.moviesandtv.databinding.FragmentTvHomeBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
 import id.interconnect.moviesandtv.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_tv_home.*
 
 class TVHomeFragment : Fragment(), OnClickItemCallback {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var fragmentTVHomeFragment: FragmentTvHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv_home, container, false)
+        fragmentTVHomeFragment = FragmentTvHomeBinding.inflate(layoutInflater, container, false)
+        return fragmentTVHomeFragment.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val myTVAdapter = TVListAdapter(this)
-        rv_tv_home.layoutManager = LinearLayoutManager(context)
-        rv_tv_home.adapter = myTVAdapter
+    override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProvider(this, ViewModelFactory.getInstance())[TVViewModel::class.java]
-
-        tv_home_progressbar.visibility = View.VISIBLE
         if (activity != null) {
-            viewModel.getPopularTV().observe(viewLifecycleOwner, Observer {
-                data ->
-                tv_home_progressbar.visibility = View.GONE
+            val viewModel =
+                ViewModelProvider(this, ViewModelFactory.getInstance())[TVViewModel::class.java]
+            val myTVAdapter = TVListAdapter(this)
+            fragmentTVHomeFragment.tvHomeProgressbar.visibility = View.VISIBLE
+            viewModel.getPopularTV().observe(viewLifecycleOwner, { data ->
+                fragmentTVHomeFragment.tvHomeProgressbar.visibility = View.GONE
                 myTVAdapter.tvList = data
                 myTVAdapter.notifyDataSetChanged()
             })
+
+            with(fragmentTVHomeFragment.rvTvHome) {
+                layoutManager = LinearLayoutManager(context)
+                adapter = myTVAdapter
+            }
+
         }
     }
 
     override fun onitemClick(id: Int) {
-//        Toast.makeText(activity,"This is id $id",Toast.LENGTH_SHORT).show()
         val intent = Intent(activity, TVDetailActivity::class.java)
-        intent.putExtra("tv_id", id)
+        intent.putExtra(TVDetailActivity.KEY_TV_ID, id)
         startActivity(intent)
     }
 
