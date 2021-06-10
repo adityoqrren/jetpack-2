@@ -26,6 +26,8 @@ class TVHomeFragment : Fragment(), OnClickItemCallback {
 
     override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val actionbar = activity?.actionBar
+        actionbar?.title = "Popular TV Shows"
 
         if (activity != null) {
             val viewModel =

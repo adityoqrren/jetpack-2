@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import id.interconnect.moviesandtv.R
 import id.interconnect.moviesandtv.databinding.FragmentMovieHomeBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
 import id.interconnect.moviesandtv.viewmodel.ViewModelFactory

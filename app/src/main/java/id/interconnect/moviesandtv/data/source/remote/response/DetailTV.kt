@@ -4,12 +4,12 @@ data class DetailTV (
     val id:Int,
     val original_name:String,
     val poster_path:String,
-    val genres: List<Genre>,
-    val original_language:String,
-    val popularity:Double,
+    var genres: List<Genre> = emptyList(),
+    val original_language:String = "",
+    var popularity:Double = 0.0,
     val vote_average:Double,
-    val created_by : List<Producer>,
-    val number_of_episodes: Int,
-    val production_companies: List<ProductionCompanies>,
+    var created_by : List<Producer> = emptyList(),
+    var number_of_episodes: Int = 0,
+    var production_companies: List<ProductionCompanies> = emptyList(),
     val overview: String
 )
