@@ -1,9 +1,13 @@
 package id.interconnect.moviesandtv.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import id.interconnect.moviesandtv.data.MovieTVRepository
 import id.interconnect.moviesandtv.di.Injection
+import id.interconnect.moviesandtv.ui.favorite.FavoriteMoviesViewModel
+import id.interconnect.moviesandtv.ui.favorite.FavoriteTVFragment
+import id.interconnect.moviesandtv.ui.favorite.FavoriteTVViewModel
 import id.interconnect.moviesandtv.ui.movies.MovieViewModel
 import id.interconnect.moviesandtv.ui.tv.TVViewModel
 
@@ -12,9 +16,9 @@ class ViewModelFactory private constructor(private val mMovieTVRepository: Movie
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance() : ViewModelFactory =
+        fun getInstance(context: Context) : ViewModelFactory =
             instance?: synchronized(this){
-                    instance ?: ViewModelFactory(Injection.provideRepository())
+                    instance ?: ViewModelFactory(Injection.provideRepository(context))
             }
     }
 
@@ -26,6 +30,12 @@ class ViewModelFactory private constructor(private val mMovieTVRepository: Movie
             }
             modelClass.isAssignableFrom(TVViewModel::class.java)->{
                 return TVViewModel(mMovieTVRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteTVViewModel::class.java)->{
+                return FavoriteTVViewModel(mMovieTVRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteMoviesViewModel::class.java)->{
+                return FavoriteMoviesViewModel(mMovieTVRepository) as T
             }
             else -> throw Throwable("Unknown Viewmodel")
         }

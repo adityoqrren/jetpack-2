@@ -68,7 +68,7 @@ object DummyData {
                 val poster_path = tv.getString("poster_path")
                 val overview = tv.getString("overview")
 
-                val tvItemResponse = TVItem(id, original_name, vote_average, poster_path, overview)
+                val tvItemResponse = TVItem(id=id, original_name=original_name, vote_average = vote_average, poster_path = poster_path, overview = overview)
                 listTV.add(tvItemResponse)
             }
         } catch (e: JSONException) {
@@ -127,8 +127,8 @@ object DummyData {
         return detailMovie as DetailMovie
     }
 
-    fun generateDummyDetailTV(): DetailTV {
-        var detailTV: DetailTV? = null
+    fun generateDummyDetailTV(): TVItem {
+        var detailTV: TVItem? = null
         try {
             val responseObject =
                 JSONObject(parsingFileToString("detail_tv_1.json").toString())
@@ -167,7 +167,7 @@ object DummyData {
                 production_companies.add(one_company)
             }
             val overview = responseObject.getString("overview")
-            detailTV = DetailTV(
+            detailTV = TVItem(
                 thisId,
                 original_name,
                 poster_path,
@@ -184,7 +184,7 @@ object DummyData {
             e.printStackTrace()
         }
 
-        return detailTV as DetailTV
+        return detailTV as TVItem
     }
 
 

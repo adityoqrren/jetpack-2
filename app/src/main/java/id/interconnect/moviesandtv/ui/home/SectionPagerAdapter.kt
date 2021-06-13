@@ -7,9 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import id.interconnect.moviesandtv.R
 import id.interconnect.moviesandtv.ui.favorite.FavoriteMoviesFragment
-import id.interconnect.moviesandtv.ui.favorite.FavoriteTVsFragment
-import id.interconnect.moviesandtv.ui.movies.MovieHomeFragment
-import id.interconnect.moviesandtv.ui.tv.TVHomeFragment
+import id.interconnect.moviesandtv.ui.favorite.FavoriteTVFragment
 
 class SectionPagerAdapter(private val mContext:Context, fm:FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
     companion object{
@@ -24,7 +22,7 @@ class SectionPagerAdapter(private val mContext:Context, fm:FragmentManager) : Fr
     override fun getItem(position: Int): Fragment =
         when(position){
             0->FavoriteMoviesFragment()
-            1->FavoriteTVsFragment()
+            1->FavoriteTVFragment()
             else -> Fragment()
         }
 

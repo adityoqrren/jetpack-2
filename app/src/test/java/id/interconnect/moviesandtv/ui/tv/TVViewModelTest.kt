@@ -3,7 +3,6 @@ package id.interconnect.moviesandtv.ui.tv
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import id.interconnect.moviesandtv.data.DetailTV
 import id.interconnect.moviesandtv.data.TVItem
 import id.interconnect.moviesandtv.data.MovieTVRepository
 import id.interconnect.moviesandtv.utils.DummyData
@@ -32,7 +31,7 @@ class TVViewModelTest {
     private lateinit var observerPopularTV: Observer<List<TVItem>>
 
     @Mock
-    private lateinit var observerDetailTV: Observer<DetailTV>
+    private lateinit var observerDetailTV: Observer<TVItem>
 
     @Before
     fun setUp() {
@@ -57,10 +56,10 @@ class TVViewModelTest {
     @Test
     fun getDetailTV() {
         val dummyDetailTV = DummyData.generateDummyDetailTV()
-        val detailTV = MutableLiveData<DetailTV>()
+        val detailTV = MutableLiveData<TVItem>()
         detailTV.value = dummyDetailTV
         `when`(movieTVRepository.getDetailTV(dummyDetailTV.id)).thenReturn(detailTV)
-        val detailTVEntity = viewModel.getDetailTV(dummyDetailTV.id).value as DetailTV
+        val detailTVEntity = viewModel.getDetailTV(dummyDetailTV.id).value as TVItem
         verify(movieTVRepository).getDetailTV(dummyDetailTV.id)
         assertNotNull(detailTVEntity)
         assertEquals(dummyDetailTV.id, detailTVEntity.id)
@@ -68,7 +67,7 @@ class TVViewModelTest {
         assertEquals(dummyDetailTV.poster_path, detailTVEntity.poster_path)
         assertEquals(dummyDetailTV.genres, detailTVEntity.genres)
         assertEquals(dummyDetailTV.original_language, detailTVEntity.original_language)
-        assertEquals(dummyDetailTV.popularity, detailTVEntity.popularity, 0.001)
+        assertEquals(dummyDetailTV.popularity, detailTVEntity.popularity , 0.001)
         assertEquals(dummyDetailTV.vote_average, detailTVEntity.vote_average, 0.001)
         assertEquals(dummyDetailTV.created_by, detailTVEntity.created_by)
         assertEquals(dummyDetailTV.number_of_episodes, detailTVEntity.number_of_episodes)

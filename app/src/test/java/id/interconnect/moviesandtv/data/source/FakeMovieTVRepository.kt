@@ -37,10 +37,10 @@ class FakeMovieTVRepository(val remoteDataSource: RemoteDataSource) {
         return tvListLiveData
     }
 
-    fun getDetailTV(id: Int): LiveData<DetailTV> {
-        val tvDetailLiveData = MutableLiveData<DetailTV>()
+    fun getDetailTV(id: Int): LiveData<TVItem> {
+        val tvDetailLiveData = MutableLiveData<TVItem>()
         remoteDataSource.getDetailTV(id, object : RemoteDataSource.LoadDetailTV {
-            override fun onDetailTVReceived(detailTVResponses: DetailTV) {
+            override fun onDetailTVReceived(detailTVResponses: TVItem) {
                 tvDetailLiveData.postValue(detailTVResponses)
             }
         })

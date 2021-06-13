@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.interconnect.moviesandtv.databinding.FragmentTvHomeBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
 import id.interconnect.moviesandtv.viewmodel.ViewModelFactory
+import id.interconnect.moviesandtv.vo.Status
 
 class TVHomeFragment : Fragment(), OnClickItemCallback {
     private lateinit var fragmentTVHomeFragment: FragmentTvHomeBinding
@@ -31,13 +33,23 @@ class TVHomeFragment : Fragment(), OnClickItemCallback {
 
         if (activity != null) {
             val viewModel =
-                ViewModelProvider(this, ViewModelFactory.getInstance())[TVViewModel::class.java]
+                ViewModelProvider(this, ViewModelFactory.getInstance(requireContext()))[TVViewModel::class.java]
             val myTVAdapter = TVListAdapter(this)
-            fragmentTVHomeFragment.tvHomeProgressbar.visibility = View.VISIBLE
-            viewModel.getPopularTV().observe(viewLifecycleOwner, { data ->
-                fragmentTVHomeFragment.tvHomeProgressbar.visibility = View.GONE
-                myTVAdapter.tvList = data
-                myTVAdapter.notifyDataSetChanged()
+            viewModel.getPopularTV().observe(viewLifecycleOwner, { dataTVList ->
+                if(dataTVList!=null){
+                    when(dataTVList.status){
+                        Status.LOADING -> fragmentTVHomeFragment.tvProgressbar.visibility = View.VISIBLE
+                        Status.SUCCESS -> {
+                            fragmentTVHomeFragment.tvProgressbar.visibility = View.GONE
+                            myTVAdapter.submitList(dataTVList.data)
+                            myTVAdapter.notifyDataSetChanged()
+                        }
+                        Status.ERROR -> {
+                            fragmentTVHomeFragment.tvProgressbar.visibility = View.GONE
+                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             })
 
             with(fragmentTVHomeFragment.rvTvHome) {

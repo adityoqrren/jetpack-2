@@ -4,27 +4,47 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import id.interconnect.moviesandtv.data.Genre
+import id.interconnect.moviesandtv.data.Producer
+import id.interconnect.moviesandtv.data.ProductionCompanies
 
 @Entity(tableName = "tvitementities")
 data class TVItemEntity (
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "id")
-    var id: Int,
+    @ColumnInfo(name="id")
+    val id: Int,
 
     @ColumnInfo(name="original_name")
-    var original_name: String,
-
-    @ColumnInfo(name="vote_average")
-    var vote_average: String,
+    val original_name: String,
 
     @ColumnInfo(name="poster_path")
-    var poster_path: String,
+    val poster_path: String,
+
+    @ColumnInfo(name="genres")
+    var genres: String = "",
+
+    @ColumnInfo(name="original_language")
+    var original_language: String = "",
+
+    @ColumnInfo(name="popularity")
+    var popularity: Double = 0.0,
+
+    @ColumnInfo(name="vote_average")
+    val vote_average: Double,
+
+    @ColumnInfo(name="created_by")
+    var created_by : String = "",
+
+    @ColumnInfo(name="number_of_episodes")
+    var number_of_episodes: Int = 0,
+
+    @ColumnInfo(name="production_companies")
+    var production_companies: String = "",
 
     @ColumnInfo(name="overview")
-    var overview: String,
+    val overview: String,
 
     @ColumnInfo(name="favorited")
     var favorited: Boolean = false
-
 )

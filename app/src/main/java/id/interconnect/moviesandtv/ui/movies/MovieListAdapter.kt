@@ -2,22 +2,37 @@ package id.interconnect.moviesandtv.ui.movies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.interconnect.moviesandtv.R
+import id.interconnect.moviesandtv.data.source.local.entity.MovieItemEntity
+import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
 import id.interconnect.moviesandtv.databinding.MovieListItemBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
 
 
 class MovieListAdapter(private val itemClick: OnClickItemCallback) :
-    RecyclerView.Adapter<MovieListAdapter.MyViewHolder>() {
-    var movieList = emptyList<id.interconnect.moviesandtv.data.MovieItem>()
+    PagedListAdapter<MovieItemEntity, MovieListAdapter.MyViewHolder>(DIFF_CALLBACK) {
+
+    companion object{
+        private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<MovieItemEntity>(){
+            override fun areContentsTheSame(oldItem: MovieItemEntity, newItem: MovieItemEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areItemsTheSame(oldItem: MovieItemEntity, newItem: MovieItemEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
+    }
 
     inner class MyViewHolder(private val binding: MovieListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: id.interconnect.moviesandtv.data.MovieItem) {
+        fun bind(movie: MovieItemEntity) {
             with(binding) {
-                movieitemJudul.text = movie.title
+                movieitemJudul.text = movie.original_title
                 movieitemOverview.text = movie.overview
                 movieitemRating.text = movie.vote_average.toString()
                 Glide.with(itemView.context)
@@ -31,18 +46,17 @@ class MovieListAdapter(private val itemClick: OnClickItemCallback) :
         }
     }
 
+    fun getSwipedData(swippedPosition: Int): MovieItemEntity? = getItem(swippedPosition)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val layout =
             MovieListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(layout)
     }
 
-    override fun getItemCount(): Int {
-        return movieList.size
-    }
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(movieList[position])
+        val movieItem = getItem(position)
+        movieItem?.let { holder.bind(it) }
     }
 
 }

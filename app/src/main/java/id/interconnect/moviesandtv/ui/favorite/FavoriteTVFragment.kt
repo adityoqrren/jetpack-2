@@ -7,65 +7,63 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationMenu
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import id.interconnect.moviesandtv.R
-import id.interconnect.moviesandtv.databinding.FragmentFavoriteMoviesBinding
 import id.interconnect.moviesandtv.databinding.FragmentFavoriteTvBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
-import id.interconnect.moviesandtv.ui.movies.MovieDetailActivity
-import id.interconnect.moviesandtv.ui.movies.MovieListAdapter
 import id.interconnect.moviesandtv.ui.tv.TVDetailActivity
 import id.interconnect.moviesandtv.ui.tv.TVListAdapter
+import id.interconnect.moviesandtv.ui.tv.TVViewModel
 import id.interconnect.moviesandtv.viewmodel.ViewModelFactory
 
-
-class FavoriteMoviesFragment : Fragment(), OnClickItemCallback {
-    private lateinit var favoriteMoviesFragment: FragmentFavoriteMoviesBinding
-    private lateinit var viewModel: FavoriteMoviesViewModel
-    private lateinit var myMovieAdapter: MovieListAdapter
+class FavoriteTVFragment : Fragment(), OnClickItemCallback {
+    private lateinit var favoriteTVFragment: FragmentFavoriteTvBinding
+    private lateinit var viewModel: FavoriteTVViewModel
+    private lateinit var myTVAdapter: TVListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        favoriteMoviesFragment = FragmentFavoriteMoviesBinding.inflate(layoutInflater, container, false)
-        return favoriteMoviesFragment.root
+        favoriteTVFragment = FragmentFavoriteTvBinding.inflate(layoutInflater,container,false)
+        return favoriteTVFragment.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        itemTouchHelper.attachToRecyclerView(favoriteMoviesFragment?.favMoviesRv)
+        itemTouchHelper.attachToRecyclerView(favoriteTVFragment?.favTVRv)
 
         if(activity != null){
 
             viewModel = ViewModelProvider(this,
-                ViewModelFactory.getInstance(requireContext()))[FavoriteMoviesViewModel::class.java]
-            myMovieAdapter = MovieListAdapter(this)
-            favoriteMoviesFragment.favmovieProgressbar.visibility = View.VISIBLE
-            viewModel.getFavoriteMovies().observe(viewLifecycleOwner, { dataTVList ->
-                favoriteMoviesFragment.favmovieProgressbar.visibility = View.GONE
-                myMovieAdapter.submitList(dataTVList)
-                myMovieAdapter.notifyDataSetChanged()
-                Log.d("data: ",myMovieAdapter.currentList.toString())
+                ViewModelFactory.getInstance(requireContext()))[FavoriteTVViewModel::class.java]
+            myTVAdapter = TVListAdapter(this)
+            favoriteTVFragment.favtvProgressbar.visibility = View.VISIBLE
+            viewModel.getFavoriteTV().observe(viewLifecycleOwner, { dataTVList ->
+                favoriteTVFragment.favtvProgressbar.visibility = View.GONE
+                myTVAdapter.submitList(dataTVList)
+                myTVAdapter.notifyDataSetChanged()
+                Log.d("data: ",myTVAdapter.currentList.toString())
             })
 
-            favoriteMoviesFragment.favMoviesRv.layoutManager = LinearLayoutManager(context)
-            favoriteMoviesFragment.favMoviesRv.adapter = myMovieAdapter
-            favoriteMoviesFragment.favMoviesRv.setHasFixedSize(true)
+            favoriteTVFragment.favTVRv.layoutManager = LinearLayoutManager(context)
+            favoriteTVFragment.favTVRv.adapter = myTVAdapter
+            favoriteTVFragment.favTVRv.setHasFixedSize(true)
 
         }
     }
 
     override fun onitemClick(id: Int) {
-        val intent = Intent(activity, MovieDetailActivity::class.java)
-        intent.putExtra(MovieDetailActivity.KEY_MOVIE_ID, id)
+        val intent = Intent(activity, TVDetailActivity::class.java)
+        intent.putExtra(TVDetailActivity.KEY_TV_ID, id)
         startActivity(intent)
     }
 
@@ -84,15 +82,15 @@ class FavoriteMoviesFragment : Fragment(), OnClickItemCallback {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             if(view != null){
                 val swipePosition = viewHolder.adapterPosition
-                val tvItem = myMovieAdapter.getSwipedData(swipePosition)
+                val tvItem = myTVAdapter.getSwipedData(swipePosition)
                 tvItem?.let { viewModel.setFavorite(it) }
 
-                val mainView = favoriteMoviesFragment.root.rootView.findViewById<BottomNavigationView>(R.id.my_bottom_navigation)
+                val mainView = favoriteTVFragment.root.rootView.findViewById<BottomNavigationView>(R.id.my_bottom_navigation)
 
                 val snackbar = Snackbar.make(view as View, "Batalkan menghapus item sebelumnya?", Snackbar.LENGTH_LONG)
                 snackbar.setAnchorView(mainView)
                 snackbar.setAction("OK"){
-                        v ->
+                    v ->
                     tvItem?.let { viewModel.setFavorite(it) }
                 }
                 snackbar.show()
@@ -100,4 +98,5 @@ class FavoriteMoviesFragment : Fragment(), OnClickItemCallback {
         }
 
     })
+
 }

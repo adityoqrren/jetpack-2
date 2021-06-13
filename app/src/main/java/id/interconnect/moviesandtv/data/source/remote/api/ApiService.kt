@@ -3,7 +3,7 @@ package id.interconnect.moviesandtv.data.source.remote.api
 import id.interconnect.moviesandtv.data.AllMoviesResponse
 import id.interconnect.moviesandtv.data.AllTVResponse
 import id.interconnect.moviesandtv.data.DetailMovie
-import id.interconnect.moviesandtv.data.DetailTV
+import id.interconnect.moviesandtv.data.TVItem
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -30,5 +30,5 @@ interface ApiService {
     fun getDetailTV(
         @Path("id") id:Int,
         @Query("api_key") api_key:String
-    ) : Call<DetailTV>
+    ) : Call<TVItem>
 }

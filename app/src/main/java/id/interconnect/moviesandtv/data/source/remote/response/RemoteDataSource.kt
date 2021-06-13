@@ -1,6 +1,8 @@
 package id.interconnect.moviesandtv.data.source.remote.response
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import id.interconnect.moviesandtv.BuildConfig
 import id.interconnect.moviesandtv.api.ApiClient
 import id.interconnect.moviesandtv.data.*
@@ -26,8 +28,9 @@ class RemoteDataSource {
 
     private val postApiInterface = ApiClient.getClient().create(ApiService::class.java)
 
-    fun getPopularMovies(callback: LoadPopularMovie) {
+    fun getPopularMovies(): LiveData<ApiResponse<List<MovieItem>>> {
         val call = postApiInterface.getPopularMovies(BuildConfig.MY_API_KEY)
+        val resultPopularMovies = MutableLiveData<ApiResponse<List<MovieItem>>>()
         EspressoIdlingResource.increment()
         call.enqueue(object : Callback<AllMoviesResponse> {
             override fun onFailure(call: Call<AllMoviesResponse>, t: Throwable) {
@@ -41,7 +44,7 @@ class RemoteDataSource {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.results?.let {
-                        callback.onAllMovieReceived(it)
+                        resultPopularMovies.value = ApiResponse.success(it)
                     }
                 } else {
                     response.errorBody()?.toString()?.let {
@@ -52,11 +55,14 @@ class RemoteDataSource {
             }
 
         })
+
+        return resultPopularMovies
     }
 
 
-    fun getDetailMovie(id: Int, callback: LoadDetailMovie) {
+    fun getDetailMovie(id: Int): LiveData<ApiResponse<DetailMovie>> {
         val call = postApiInterface.getDetailMovie(id, BuildConfig.MY_API_KEY)
+        val resultDetailMovie = MutableLiveData<ApiResponse<DetailMovie>>()
         EspressoIdlingResource.increment()
         call.enqueue(object : Callback<DetailMovie> {
             override fun onFailure(call: Call<DetailMovie>, t: Throwable) {
@@ -67,7 +73,7 @@ class RemoteDataSource {
             override fun onResponse(call: Call<DetailMovie>, response: Response<DetailMovie>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        callback.onDetailMovieReceived(it)
+                        resultDetailMovie.value = ApiResponse.success(it)
                     }
                 } else {
                     response.errorBody()?.toString()?.let {
@@ -78,10 +84,12 @@ class RemoteDataSource {
             }
 
         })
+        return resultDetailMovie
     }
 
-    fun getPopularTV(callback: LoadPopularTV) {
+    fun getPopularTV(): LiveData<ApiResponse<List<TVItem>>> {
         val call = postApiInterface.getPopularTV(BuildConfig.MY_API_KEY)
+        val resultPopularTV = MutableLiveData<ApiResponse<List<TVItem>>>()
         EspressoIdlingResource.increment()
         call.enqueue(object : Callback<AllTVResponse> {
             override fun onFailure(call: Call<AllTVResponse>, t: Throwable) {
@@ -95,7 +103,7 @@ class RemoteDataSource {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.results?.let {
-                        callback.onAllTVReceived(it)
+                        resultPopularTV.value = ApiResponse.success(it)
                     }
                 } else {
                     response.errorBody()?.toString()?.let {
@@ -106,21 +114,24 @@ class RemoteDataSource {
             }
 
         })
+
+        return resultPopularTV
     }
 
-    fun getDetailTV(id: Int, callback: LoadDetailTV) {
+    fun getDetailTV(id: Int) : LiveData<ApiResponse<TVItem>> {
         val call = postApiInterface.getDetailTV(id, BuildConfig.MY_API_KEY)
+        val resultDetailTV = MutableLiveData<ApiResponse<TVItem>>()
         EspressoIdlingResource.increment()
-        call.enqueue(object : Callback<DetailTV> {
-            override fun onFailure(call: Call<DetailTV>, t: Throwable) {
+        call.enqueue(object : Callback<TVItem> {
+            override fun onFailure(call: Call<TVItem>, t: Throwable) {
                 Log.d("disini errornya ", "${t.message}")
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onResponse(call: Call<DetailTV>, response: Response<DetailTV>) {
+            override fun onResponse(call: Call<TVItem>, response: Response<TVItem>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        callback.onDetailTVReceived(it)
+                        resultDetailTV.value = ApiResponse.success(it)
                     }
                 } else {
                     response.errorBody()?.toString()?.let {
@@ -131,22 +142,23 @@ class RemoteDataSource {
             }
 
         })
+        return resultDetailTV
     }
 
-    interface LoadPopularMovie {
-        fun onAllMovieReceived(movieResponses: List<MovieItem>)
-    }
+//    interface LoadPopularMovie {
+//        fun onAllMovieReceived(movieResponses: List<MovieItem>)
+//    }
+//
+//    interface LoadDetailMovie {
+//        fun onDetailMovieReceived(detailMovieResponses: DetailMovie)
+//    }
 
-    interface LoadDetailMovie {
-        fun onDetailMovieReceived(detailMovieResponses: DetailMovie)
-    }
-
-    interface LoadPopularTV {
-        fun onAllTVReceived(TVResponses: List<TVItem>)
-    }
-
-    interface LoadDetailTV {
-        fun onDetailTVReceived(detailTVResponses: DetailTV)
-    }
+//    interface LoadPopularTV {
+//        fun onAllTVReceived(TVResponses: List<TVItem>)
+//    }
+//
+//    interface LoadDetailTV {
+//        fun onDetailTVReceived(detailTVResponses: TVItem)
+//    }
 
 }
