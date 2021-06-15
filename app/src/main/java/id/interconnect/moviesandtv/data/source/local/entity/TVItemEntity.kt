@@ -39,6 +39,9 @@ data class TVItemEntity (
     @ColumnInfo(name="number_of_episodes")
     var number_of_episodes: Int = 0,
 
+    @ColumnInfo(name="first_air_date")
+    val first_air_date: String,
+
     @ColumnInfo(name="production_companies")
     var production_companies: String = "",
 

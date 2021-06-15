@@ -76,6 +76,7 @@ class MovieDetailActivity : AppCompatActivity() {
                                 movieDetailBinding.movieDetailRating.text =
                                     data.vote_average.toString()
                                 movieDetailBinding.movieDetailOverview.text = data.overview
+                                movieDetailBinding.movieDetailReleased.text = data.release_date
 
                             }
                             Status.ERROR -> {

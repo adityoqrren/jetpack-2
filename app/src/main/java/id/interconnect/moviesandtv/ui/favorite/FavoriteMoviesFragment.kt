@@ -41,7 +41,7 @@ class FavoriteMoviesFragment : Fragment(), OnClickItemCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemTouchHelper.attachToRecyclerView(favoriteMoviesFragment?.favMoviesRv)
+        itemTouchHelper.attachToRecyclerView(favoriteMoviesFragment?.favmoviesRv)
 
         if(activity != null){
 
@@ -56,9 +56,9 @@ class FavoriteMoviesFragment : Fragment(), OnClickItemCallback {
                 Log.d("data: ",myMovieAdapter.currentList.toString())
             })
 
-            favoriteMoviesFragment.favMoviesRv.layoutManager = LinearLayoutManager(context)
-            favoriteMoviesFragment.favMoviesRv.adapter = myMovieAdapter
-            favoriteMoviesFragment.favMoviesRv.setHasFixedSize(true)
+            favoriteMoviesFragment.favmoviesRv.layoutManager = LinearLayoutManager(context)
+            favoriteMoviesFragment.favmoviesRv.adapter = myMovieAdapter
+            favoriteMoviesFragment.favmoviesRv.setHasFixedSize(true)
 
         }
     }

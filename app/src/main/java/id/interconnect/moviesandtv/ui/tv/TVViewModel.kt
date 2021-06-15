@@ -28,12 +28,9 @@ class TVViewModel(private val repository: MovieTVRepository) : ViewModel() {
 
     fun setFavorite(){
         val tvItem = detailTV.value
-//        Log.d("check favorite vm: ",detailTVId..toString())
         if(tvItem != null){
             val tvItemData = tvItem.data
-            Log.d("check favorite vm: ",tvItemData.toString())
             if(tvItemData != null){
-                Log.d("check favorite vm: ",tvItemData.favorited.toString())
                 val newState = !tvItemData.favorited
                 repository.setFavoriteTv(tvItemData, newState)
             }

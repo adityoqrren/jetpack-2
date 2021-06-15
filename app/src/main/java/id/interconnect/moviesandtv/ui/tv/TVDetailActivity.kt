@@ -57,6 +57,7 @@ class TVDetailActivity : AppCompatActivity() {
                                 tvDetailBinding.tvDetailCompany.text = data.production_companies
                                 tvDetailBinding.tvDetailCreatedby.text = data.created_by
                                 tvDetailBinding.tvDetailGenre.text = data.genres
+                                tvDetailBinding.tvDetailFirstAired.text = data.first_air_date
                                 Glide.with(this)
                                     .load("https://image.tmdb.org/t/p/w185${data.poster_path}")
                                     .placeholder(R.drawable.ic_launcher_background)

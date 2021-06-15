@@ -31,4 +31,8 @@
     <string name="title_movie_detail">Movie Detail</string>
     <string name="title_tv_detail">TV Show Detail</string>
     <string name="content_desc_imageList">Image in List</string>
+    <string name="first_air_date">First air date:</string>
+    <string name="template_date">yyyy-mm-dd</string>
+    <string name="template_year_movie">2000</string>
+    <string name="released_text">Released:</string>
 </resources>

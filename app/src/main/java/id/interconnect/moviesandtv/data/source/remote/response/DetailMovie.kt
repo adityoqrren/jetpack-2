@@ -9,6 +9,7 @@ data class DetailMovie (
     val popularity:Double,
     val poster_path:String,
     val vote_average:Double,
+    val release_date: String,
     val production_companies:List<ProductionCompanies>,
     val adult:Boolean
 )

@@ -9,15 +9,18 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    def localProperties = new Properties()
+    localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
     defaultConfig {
         applicationId "id.interconnect.moviesandtv"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "MY_API_KEY", "\"076f8ea817f6c9c1add88f00091b0dad\""
+        buildConfigField("String", "MY_API_KEY", localProperties['API_KEY'])
     }
 
     buildTypes {
@@ -53,6 +56,11 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -78,10 +86,10 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
     implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
 
-    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
-    testImplementation "org.mockito:mockito-core:$mockitoVersion"
-    testImplementation "androidx.arch.core:core-testing:$androidCoreTestVersion"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    implementation "org.mockito:mockito-inline:$mockitoVersion"
+//    implementation "org.mockito:mockito-core:3.6.0"
+    implementation "androidx.arch.core:core-testing:$androidCoreTestVersion"
+    implementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
 
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:2.6.1"

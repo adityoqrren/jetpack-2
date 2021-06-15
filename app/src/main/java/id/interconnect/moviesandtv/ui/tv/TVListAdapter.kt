@@ -6,14 +6,14 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import id.interconnect.moviesandtv.data.TVItem
 import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
 import id.interconnect.moviesandtv.databinding.TvListItemBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
+import id.interconnect.moviesandtv.utils.DateUtil
 
 class TVListAdapter(val onClickItemCallback: OnClickItemCallback) :
     PagedListAdapter<TVItemEntity, TVListAdapter.MyViewHolder>(DIFF_CALLBACK) {
-//    var tvList = emptyList<TVItem>()
+//    var tvList = emptyList<DetailTV>()
 
     companion object{
         private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<TVItemEntity>(){
@@ -34,6 +34,7 @@ class TVListAdapter(val onClickItemCallback: OnClickItemCallback) :
                 tvitemJudul.text = tv.original_name
                 tvitemRating.text = tv.vote_average.toString()
                 tvitemOverview.text = tv.overview
+                tvitemAirDate.text = DateUtil.dateStringGetYear(tv.first_air_date)
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w185/${tv.poster_path}")
                     .into(tvitemImg)

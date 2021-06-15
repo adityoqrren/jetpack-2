@@ -39,7 +39,7 @@ class FavoriteTVFragment : Fragment(), OnClickItemCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        itemTouchHelper.attachToRecyclerView(favoriteTVFragment?.favTVRv)
+        itemTouchHelper.attachToRecyclerView(favoriteTVFragment?.favtvRv)
 
         if(activity != null){
 
@@ -54,9 +54,9 @@ class FavoriteTVFragment : Fragment(), OnClickItemCallback {
                 Log.d("data: ",myTVAdapter.currentList.toString())
             })
 
-            favoriteTVFragment.favTVRv.layoutManager = LinearLayoutManager(context)
-            favoriteTVFragment.favTVRv.adapter = myTVAdapter
-            favoriteTVFragment.favTVRv.setHasFixedSize(true)
+            favoriteTVFragment.favtvRv.layoutManager = LinearLayoutManager(context)
+            favoriteTVFragment.favtvRv.adapter = myTVAdapter
+            favoriteTVFragment.favtvRv.setHasFixedSize(true)
 
         }
     }

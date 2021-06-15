@@ -118,17 +118,17 @@ class RemoteDataSource {
         return resultPopularTV
     }
 
-    fun getDetailTV(id: Int) : LiveData<ApiResponse<TVItem>> {
+    fun getDetailTV(id: Int) : LiveData<ApiResponse<DetailTV>> {
         val call = postApiInterface.getDetailTV(id, BuildConfig.MY_API_KEY)
-        val resultDetailTV = MutableLiveData<ApiResponse<TVItem>>()
+        val resultDetailTV = MutableLiveData<ApiResponse<DetailTV>>()
         EspressoIdlingResource.increment()
-        call.enqueue(object : Callback<TVItem> {
-            override fun onFailure(call: Call<TVItem>, t: Throwable) {
+        call.enqueue(object : Callback<DetailTV> {
+            override fun onFailure(call: Call<DetailTV>, t: Throwable) {
                 Log.d("disini errornya ", "${t.message}")
                 EspressoIdlingResource.decrement()
             }
 
-            override fun onResponse(call: Call<TVItem>, response: Response<TVItem>) {
+            override fun onResponse(call: Call<DetailTV>, response: Response<DetailTV>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         resultDetailTV.value = ApiResponse.success(it)
@@ -154,11 +154,11 @@ class RemoteDataSource {
 //    }
 
 //    interface LoadPopularTV {
-//        fun onAllTVReceived(TVResponses: List<TVItem>)
+//        fun onAllTVReceived(TVResponses: List<DetailTV>)
 //    }
 //
 //    interface LoadDetailTV {
-//        fun onDetailTVReceived(detailTVResponses: TVItem)
+//        fun onDetailTVReceived(detailTVResponses: DetailTV)
 //    }
 
 }

@@ -44,25 +44,47 @@
                 app:layout_constraintTop_toTopOf="@+id/detail_tv_img" />
 
             <TextView
+                android:id="@+id/first_air_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="First aired: "
+                android:textColor="@android:color/white"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@id/tv_detail_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_title"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_first_aired"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="@string/template_date"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/first_air_text"
+                app:layout_constraintStart_toEndOf="@+id/first_air_text"
+                app:layout_constraintTop_toTopOf="@+id/first_air_text"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
                 android:id="@+id/rating_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rating_text"
                 android:textColor="@android:color/white"
                 android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="@id/tv_detail_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_title"/>
+                app:layout_constraintStart_toStartOf="@id/first_air_text"
+                app:layout_constraintTop_toBottomOf="@id/first_air_text"/>
 
             <TextView
                 android:id="@+id/tv_detail_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rating_template"
-                android:textSize="20sp"
                 android:textColor="@android:color/holo_orange_dark"
-                android:layout_marginStart="40dp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/rating_text"
-                app:layout_constraintStart_toEndOf="@id/rating_text"
+                app:layout_constraintStart_toStartOf="@+id/tv_detail_first_aired"
                 app:layout_constraintTop_toTopOf="@id/rating_text" />
 
             <TextView

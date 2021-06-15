@@ -35,6 +35,9 @@ data class MovieItemEntity (
     @ColumnInfo(name="vote_average")
     val vote_average:Double,
 
+    @ColumnInfo(name="release_date")
+    val release_date:String,
+
     @ColumnInfo(name="production_companies")
     var production_companies:String = "",
 

@@ -45,6 +45,30 @@
             app:layout_constraintStart_toEndOf="@+id/detail_movie_img"
             app:layout_constraintTop_toTopOf="@+id/detail_movie_img" />
 
+
+        <TextView
+            android:id="@+id/released_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/released_text"
+            android:textColor="@android:color/white"
+            app:layout_constraintStart_toStartOf="@id/movie_detail_title"
+            app:layout_constraintTop_toBottomOf="@id/movie_detail_title" />
+
+
+        <TextView
+            android:id="@+id/movie_detail_released"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="@string/template_date"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/released_text"
+            app:layout_constraintStart_toEndOf="@+id/released_text"
+            app:layout_constraintTop_toTopOf="@+id/released_text"
+            app:layout_constraintVertical_bias="0.0" />
+
         <TextView
             android:id="@+id/rating_text"
             android:layout_width="wrap_content"
@@ -52,19 +76,18 @@
             android:text="@string/rating_text"
             android:textColor="@android:color/white"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/movie_detail_title"
-            app:layout_constraintTop_toBottomOf="@id/movie_detail_title"/>
+            app:layout_constraintStart_toStartOf="@id/released_text"
+            app:layout_constraintTop_toBottomOf="@id/released_text"/>
 
         <TextView
             android:id="@+id/movie_detail_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rating_template"
-            android:textSize="20sp"
             android:textColor="@android:color/holo_orange_dark"
-            android:layout_marginStart="40dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/rating_text"
-            app:layout_constraintStart_toEndOf="@id/rating_text"
+            app:layout_constraintStart_toStartOf="@+id/movie_detail_released"
             app:layout_constraintTop_toTopOf="@id/rating_text" />
 
         <TextView

@@ -1,7 +1,6 @@
 package id.interconnect.moviesandtv.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import id.interconnect.moviesandtv.data.source.local.LocalDataSource
@@ -10,7 +9,6 @@ import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
 import id.interconnect.moviesandtv.data.source.remote.response.ApiResponse
 import id.interconnect.moviesandtv.data.source.remote.response.RemoteDataSource
 import id.interconnect.moviesandtv.utils.AppExecutors
-import id.interconnect.moviesandtv.utils.DummyData
 import id.interconnect.moviesandtv.utils.ListToString
 import id.interconnect.moviesandtv.vo.Resource
 
@@ -30,26 +28,6 @@ class MovieTVRepository private constructor(
                 }
             }
     }
-
-//    fun getPopularMovies(): LiveData<List<MovieItem>> {
-//        val movieListLiveData = MutableLiveData<List<MovieItem>>()
-//        remoteDataSource.getPopularMovies(object : RemoteDataSource.LoadPopularMovie {
-//            override fun onAllMovieReceived(movieResponses: List<MovieItem>) {
-//                movieListLiveData.postValue(movieResponses)
-//            }
-//        })
-//        return movieListLiveData
-//    }
-//
-//    fun getDetailMovie(id: Int): LiveData<DetailMovie> {
-//        val movieDetailLiveData = MutableLiveData<DetailMovie>()
-//        remoteDataSource.getDetailMovie(id, object : RemoteDataSource.LoadDetailMovie {
-//            override fun onDetailMovieReceived(detailMovieResponses: DetailMovie) {
-//                movieDetailLiveData.postValue(detailMovieResponses)
-//            }
-//        })
-//        return movieDetailLiveData
-//    }
 
     override fun getPopularTV(): LiveData<Resource<PagedList<TVItemEntity>>> {
         return object : NetworkBoundResource<PagedList<TVItemEntity>, List<TVItem>>(appExecutors){
@@ -78,6 +56,7 @@ class MovieTVRepository private constructor(
                         original_name = item.original_name,
                         poster_path = item.poster_path,
                         vote_average = item.vote_average,
+                        first_air_date = item.first_air_date,
                         overview = item.overview
                     )
                     tvList.add(tvItem)
@@ -88,18 +67,9 @@ class MovieTVRepository private constructor(
         }.asLiveData()
     }
 
-//    fun getPopularTV(): LiveData<List<TVItem>> {
-//        val tvListLiveData = MutableLiveData<List<TVItem>>()
-//        remoteDataSource.getPopularTV(object : RemoteDataSource.LoadPopularTV {
-//            override fun onAllTVReceived(TVResponses: List<TVItem>) {
-//                tvListLiveData.postValue(TVResponses)
-//            }
-//        })
-//        return tvListLiveData
-//    }
 
     override fun getDetailTV(id: Int): LiveData<Resource<TVItemEntity>> {
-        return object: NetworkBoundResource<TVItemEntity, TVItem>(appExecutors){
+        return object: NetworkBoundResource<TVItemEntity, DetailTV>(appExecutors){
             override fun loadFromDB(): LiveData<TVItemEntity> =
                 localDataSource.getDetailTV(id)
 
@@ -108,11 +78,11 @@ class MovieTVRepository private constructor(
                 data?.original_language == "" && data.popularity == 0.0  && data.number_of_episodes == 0
 
 
-            override fun createCall(): LiveData<ApiResponse<TVItem>> =
+            override fun createCall(): LiveData<ApiResponse<DetailTV>> =
                 remoteDataSource.getDetailTV(id)
 
 
-            override fun saveCallResult(data: TVItem){
+            override fun saveCallResult(data: DetailTV){
                 val tvItemEntity = TVItemEntity(
                     data.id,
                     data.original_name,
@@ -123,6 +93,7 @@ class MovieTVRepository private constructor(
                     data.vote_average,
                     ListToString.createdByListToString(data.created_by),
                     data.number_of_episodes,
+                    data.first_air_date,
                     ListToString.ProductionCompaniesToString(data.production_companies),
                     data.overview
                 )
@@ -172,6 +143,7 @@ class MovieTVRepository private constructor(
                         original_title = item.title,
                         poster_path = item.poster_path,
                         vote_average = item.vote_average,
+                        release_date = item.release_date,
                         overview = item.overview
                     )
                     movieList.add(movieItem)
@@ -206,6 +178,7 @@ class MovieTVRepository private constructor(
                     data.popularity,
                     data.poster_path,
                     data.vote_average,
+                    data.release_date,
                     ListToString.ProductionCompaniesToString(data.production_companies),
                     data.adult,
                 )
@@ -228,13 +201,4 @@ class MovieTVRepository private constructor(
         appExecutors.diskIO().execute { localDataSource.setFavoriteMovie(movieItemEntity, state) }
     }
 
-//    fun getDetailTV(id: Int): LiveData<TVItem> {
-//        val tvDetailLiveData = MutableLiveData<TVItem>()
-//        remoteDataSource.getDetailTV(id, object : RemoteDataSource.LoadDetailTV {
-//            override fun onDetailTVReceived(detailTVResponses: TVItem) {
-//                tvDetailLiveData.postValue(detailTVResponses)
-//            }
-//        })
-//        return tvDetailLiveData
-//    }
 }

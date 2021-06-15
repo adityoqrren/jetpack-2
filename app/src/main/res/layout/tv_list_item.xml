@@ -41,35 +41,57 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/rating"
+            android:id="@+id/first_air_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rating_text"
+            android:text="@string/first_air_date"
             android:textSize="14sp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@+id/tvitem_judul"
             app:layout_constraintTop_toBottomOf="@id/tvitem_judul" />
 
         <TextView
+            android:id="@+id/tvitem_air_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:text="@string/template_date"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/first_air_date"
+            app:layout_constraintStart_toEndOf="@id/rating"
+            app:layout_constraintTop_toTopOf="@+id/first_air_date"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rating_text"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/first_air_date"
+            app:layout_constraintTop_toBottomOf="@id/first_air_date" />
+
+        <TextView
             android:id="@+id/tvitem_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:textSize="14sp"
             android:text="@string/rating_template"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/rating"
-            app:layout_constraintStart_toEndOf="@id/rating"
+            app:layout_constraintStart_toStartOf="@+id/tvitem_air_date"
             app:layout_constraintTop_toTopOf="@id/rating" />
 
         <TextView
             android:id="@+id/constant_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
             android:text="@string/per_rating"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvitem_rating"
             app:layout_constraintStart_toEndOf="@id/tvitem_rating"
-            app:layout_constraintTop_toTopOf="@id/tvitem_rating" />
+            app:layout_constraintTop_toTopOf="@id/tvitem_rating"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tvitem_overview"

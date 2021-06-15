@@ -3,7 +3,6 @@ package id.interconnect.moviesandtv.data.source.local.room
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
-import id.interconnect.moviesandtv.data.TVItem
 import id.interconnect.moviesandtv.data.source.local.entity.MovieItemEntity
 import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
 

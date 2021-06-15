@@ -11,6 +11,7 @@ import id.interconnect.moviesandtv.data.source.local.entity.MovieItemEntity
 import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
 import id.interconnect.moviesandtv.databinding.MovieListItemBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
+import id.interconnect.moviesandtv.utils.DateUtil
 
 
 class MovieListAdapter(private val itemClick: OnClickItemCallback) :
@@ -35,6 +36,7 @@ class MovieListAdapter(private val itemClick: OnClickItemCallback) :
                 movieitemJudul.text = movie.original_title
                 movieitemOverview.text = movie.overview
                 movieitemRating.text = movie.vote_average.toString()
+                movieitemYear.text = DateUtil.dateStringGetYear(movie.release_date)
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w185${movie.poster_path}")
                     .placeholder(R.drawable.ic_launcher_background)

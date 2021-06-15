@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun addFragment(fragment_choosen: Fragment, title: String){
-        activityHomeBinding.toolbar.title = title
+//        activityHomeBinding.toolbar.title = title
         supportFragmentManager.beginTransaction().replace(R.id.my_container, fragment_choosen).commit()
     }
 

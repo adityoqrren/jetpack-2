@@ -3,17 +3,19 @@ package id.interconnect.moviesandtv.ui.movies
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import id.interconnect.moviesandtv.data.DetailMovie
-import id.interconnect.moviesandtv.data.MovieItem
+import androidx.paging.PagedList
 import id.interconnect.moviesandtv.data.MovieTVRepository
+import id.interconnect.moviesandtv.data.source.local.entity.MovieItemEntity
 import id.interconnect.moviesandtv.utils.DummyData
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import id.interconnect.moviesandtv.vo.Resource
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
@@ -22,6 +24,9 @@ import org.mockito.junit.MockitoJUnitRunner
 class MovieViewModelTest {
 
     private lateinit var viewModel: MovieViewModel
+    private val moviesDummy = DummyData.generateDummyListMovies()
+    private val movieId = moviesDummy[0].id
+    private val detailMovieDummy = DummyData.generateDummyDetailMovie()
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -30,54 +35,61 @@ class MovieViewModelTest {
     private lateinit var movieTVRepository: MovieTVRepository
 
     @Mock
-    private lateinit var observerPopularMovies: Observer<List<MovieItem>>
+    private lateinit var observerPopularMovies: Observer<Resource<PagedList<MovieItemEntity>>>
 
     @Mock
-    private lateinit var observerDetailMovies: Observer<DetailMovie>
+    private lateinit var observerDetailMovie: Observer<Resource<MovieItemEntity>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<MovieItemEntity>
 
     @Before
     fun setUp() {
         viewModel = MovieViewModel(movieTVRepository)
+        viewModel.setSelectedMovieItem(movieId)
     }
-
 
     @Test
     fun getPopularMovies() {
-        val dummyListMovie = DummyData.generateDummyListMovies()
-        val movieList = MutableLiveData<List<MovieItem>>()
-        movieList.value = dummyListMovie
+        val dummyListMovies = Resource.success(pagedList)
+        `when`(dummyListMovies.data?.size).thenReturn(moviesDummy.size)
+        val movieList = MutableLiveData<Resource<PagedList<MovieItemEntity>>>()
+        movieList.value = dummyListMovies
 
         `when`(movieTVRepository.getPopularMovies()).thenReturn(movieList)
-        val movieEntities = viewModel.getPopularMovies().value
+        val movieEntities = viewModel.getPopularMovies().value?.data
         verify(movieTVRepository).getPopularMovies()
         assertNotNull(movieEntities)
         assertEquals(20, movieEntities?.size)
 
         viewModel.getPopularMovies().observeForever(observerPopularMovies)
-        verify(observerPopularMovies).onChanged(dummyListMovie)
+        verify(observerPopularMovies).onChanged(dummyListMovies)
     }
 
     @Test
     fun getDetailMovie() {
-        val dummyDetailMovie = DummyData.generateDummyDetailMovie()
-        val detailMovie = MutableLiveData<DetailMovie>()
+        val dummyDetailMovie = Resource.success(detailMovieDummy)
+        val detailMovie = MutableLiveData<Resource<MovieItemEntity>>()
         detailMovie.value = dummyDetailMovie
-        `when`(movieTVRepository.getDetailMovie(dummyDetailMovie.id)).thenReturn(detailMovie)
-        val detailMovieEntity = viewModel.getDetailMovie(dummyDetailMovie.id).value as DetailMovie
-        verify(movieTVRepository).getDetailMovie(dummyDetailMovie.id)
-        assertNotNull(detailMovieEntity)
-        assertEquals(dummyDetailMovie.id, detailMovieEntity.id)
-        assertEquals(dummyDetailMovie.genres, detailMovieEntity.genres)
-        assertEquals(dummyDetailMovie.original_language, detailMovieEntity.original_language)
-        assertEquals(dummyDetailMovie.original_title, detailMovieEntity.original_title)
-        assertEquals(dummyDetailMovie.overview, detailMovieEntity.overview)
-        assertEquals(dummyDetailMovie.popularity, detailMovieEntity.popularity, 0.001)
-        assertEquals(dummyDetailMovie.poster_path, detailMovieEntity.poster_path)
-        assertEquals(dummyDetailMovie.vote_average, detailMovieEntity.vote_average, 0.001)
-        assertEquals(dummyDetailMovie.production_companies, detailMovieEntity.production_companies)
-        assertEquals(dummyDetailMovie.adult, detailMovieEntity.adult)
 
-        viewModel.getDetailMovie(dummyDetailMovie.id).observeForever(observerDetailMovies)
-        verify(observerDetailMovies).onChanged(dummyDetailMovie)
+        `when`(movieTVRepository.getDetailMovie(movieId)).thenReturn(detailMovie)
+
+        viewModel.detailMovie.observeForever(observerDetailMovie)
+        verify(observerDetailMovie).onChanged(dummyDetailMovie)
+    }
+
+    @Test
+    fun setFavorite() {
+        val dummyDetailMovie = Resource.success(detailMovieDummy)
+        val detailMovie = MutableLiveData<Resource<MovieItemEntity>>()
+        detailMovie.value = dummyDetailMovie
+
+        viewModel.detailMovie = detailMovie
+
+        Mockito.doNothing().`when`(movieTVRepository).setFavoriteMovie(detailMovieDummy, true)
+
+        viewModel.setFavorite()
+        verify(movieTVRepository).setFavoriteMovie(detailMovieDummy, true)
+        Mockito.verifyNoMoreInteractions(observerDetailMovie)
     }
 }
