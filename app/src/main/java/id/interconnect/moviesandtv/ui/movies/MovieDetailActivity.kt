@@ -3,6 +3,7 @@ package id.interconnect.moviesandtv.ui.movies
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -10,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import id.interconnect.moviesandtv.R
 import id.interconnect.moviesandtv.databinding.ActivityMovieDetailBinding
-import id.interconnect.moviesandtv.utils.ListToString
 import id.interconnect.moviesandtv.viewmodel.ViewModelFactory
 import id.interconnect.moviesandtv.vo.Status
 
@@ -48,9 +48,10 @@ class MovieDetailActivity : AppCompatActivity() {
                     if (detailMovie != null) {
                         when (detailMovie.status) {
                             Status.LOADING -> {
-
+                                movieDetailBinding.detailMovieProgressbar.visibility = View.VISIBLE
                             }
-                            Status.SUCCESS -> if(detailMovie.data != null){
+                            Status.SUCCESS -> if (detailMovie.data != null) {
+                                movieDetailBinding.detailMovieProgressbar.visibility = View.GONE
                                 val data = detailMovie.data
 
                                 movieDetailBinding.movieDetailCompany.text =
@@ -80,6 +81,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
                             }
                             Status.ERROR -> {
+                                movieDetailBinding.detailMovieProgressbar.visibility = View.GONE
                                 Toast.makeText(
                                     applicationContext,
                                     "Terjadi kesalahan",
@@ -98,18 +100,19 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu_favorite, menu)
         this.menu = menu
-        movieViewModel.detailMovie.observe(this,{movieItemDetail ->
-            if(movieItemDetail != null){
-                when(movieItemDetail.status){
+        movieViewModel.detailMovie.observe(this, { movieItemDetail ->
+            if (movieItemDetail != null) {
+                when (movieItemDetail.status) {
                     Status.LOADING -> {
 
                     }
-                    Status.SUCCESS -> if(movieItemDetail.data != null){
+                    Status.SUCCESS -> if (movieItemDetail.data != null) {
                         val state = movieItemDetail.data.favorited
                         setFavoriteState(state)
                     }
                     Status.ERROR -> {
-                        Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
@@ -118,7 +121,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.menu_favorite){
+        if (item.itemId == R.id.menu_favorite) {
             movieViewModel.setFavorite()
             return true
         }

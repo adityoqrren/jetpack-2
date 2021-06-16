@@ -35,4 +35,10 @@
     <string name="template_date">yyyy-mm-dd</string>
     <string name="template_year_movie">2000</string>
     <string name="released_text">Released:</string>
+    <string name="content_desc">content desc</string>
+    <string name="first_aired_text">First aired:</string>
+    <string name="menu_title_favorites">Favorites</string>
+    <string name="sort_from">Sort from</string>
+    <string name="highest_rating">Highest rating</string>
+    <string name="lowest_rating">Lowest rating</string>
 </resources>

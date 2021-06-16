@@ -1,7 +1,9 @@
 package id.interconnect.moviesandtv.data.source.local.room
 
 import android.content.Context
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import id.interconnect.moviesandtv.data.source.local.entity.MovieItemEntity
 import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
 
@@ -10,15 +12,15 @@ import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
     version = 1,
     exportSchema = false,
 )
-abstract class MovieTVDatabase: RoomDatabase() {
+abstract class MovieTVDatabase : RoomDatabase() {
     abstract fun movieTVDao(): MovieTVDao
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: MovieTVDatabase? = null
 
         fun getInstance(context: Context): MovieTVDatabase =
-            INSTANCE?: synchronized(this){
+            INSTANCE ?: synchronized(this) {
                 Room.databaseBuilder(
                     context.applicationContext,
                     MovieTVDatabase::class.java,

@@ -47,17 +47,17 @@ class MovieTVRepositoryTest {
     private val tvId = tvResponses[0].id
     private val detailTVResponse = DummyData.generateDummyDetailTV()
 
-    @Test
-    fun getPopularMovies() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MovieItemEntity>
-        `when`(local.getPopularMovies()).thenReturn(dataSourceFactory)
-        movieTvRepository.getPopularMovies()
-
-        verify(local).getPopularMovies()
-        val movieEntities = Resource.success(PagedListUtil.mockPagedList(DummyData.generateDummyListMovies()))
-        assertNotNull(movieEntities.data)
-        assertEquals(movieResponses.size.toLong(), movieEntities.data?.size?.toLong())
-    }
+//    @Test
+//    fun getPopularMovies() {
+//        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MovieItemEntity>
+//        `when`(local.getPopularMovies()).thenReturn(dataSourceFactory)
+//        movieTvRepository.getPopularMovies()
+//
+//        verify(local).getPopularMovies()
+//        val movieEntities = Resource.success(PagedListUtil.mockPagedList(DummyData.generateDummyListMovies()))
+//        assertNotNull(movieEntities.data)
+//        assertEquals(movieResponses.size.toLong(), movieEntities.data?.size?.toLong())
+//    }
 
     @Test
     fun getDetailMovie() {

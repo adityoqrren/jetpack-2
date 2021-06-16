@@ -3,10 +3,10 @@ package id.interconnect.moviesandtv.ui.favorite
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,12 +15,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import id.interconnect.moviesandtv.R
 import id.interconnect.moviesandtv.databinding.FragmentFavoriteMoviesBinding
-import id.interconnect.moviesandtv.databinding.FragmentFavoriteTvBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
 import id.interconnect.moviesandtv.ui.movies.MovieDetailActivity
 import id.interconnect.moviesandtv.ui.movies.MovieListAdapter
-import id.interconnect.moviesandtv.ui.tv.TVDetailActivity
-import id.interconnect.moviesandtv.ui.tv.TVListAdapter
 import id.interconnect.moviesandtv.viewmodel.ViewModelFactory
 
 
@@ -32,28 +29,31 @@ class FavoriteMoviesFragment : Fragment(), OnClickItemCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        favoriteMoviesFragment = FragmentFavoriteMoviesBinding.inflate(layoutInflater, container, false)
+        favoriteMoviesFragment =
+            FragmentFavoriteMoviesBinding.inflate(layoutInflater, container, false)
         return favoriteMoviesFragment.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemTouchHelper.attachToRecyclerView(favoriteMoviesFragment?.favmoviesRv)
+        itemTouchHelper.attachToRecyclerView(favoriteMoviesFragment.favmoviesRv)
 
-        if(activity != null){
+        if (activity != null) {
 
-            viewModel = ViewModelProvider(this,
-                ViewModelFactory.getInstance(requireContext()))[FavoriteMoviesViewModel::class.java]
+            viewModel = ViewModelProvider(
+                this,
+                ViewModelFactory.getInstance(requireContext())
+            )[FavoriteMoviesViewModel::class.java]
             myMovieAdapter = MovieListAdapter(this)
             favoriteMoviesFragment.favmovieProgressbar.visibility = View.VISIBLE
             viewModel.getFavoriteMovies().observe(viewLifecycleOwner, { dataTVList ->
                 favoriteMoviesFragment.favmovieProgressbar.visibility = View.GONE
                 myMovieAdapter.submitList(dataTVList)
                 myMovieAdapter.notifyDataSetChanged()
-                Log.d("data: ",myMovieAdapter.currentList.toString())
+                Log.d("data: ", myMovieAdapter.currentList.toString())
             })
 
             favoriteMoviesFragment.favmoviesRv.layoutManager = LinearLayoutManager(context)
@@ -69,7 +69,7 @@ class FavoriteMoviesFragment : Fragment(), OnClickItemCallback {
         startActivity(intent)
     }
 
-    private val itemTouchHelper = ItemTouchHelper(object: ItemTouchHelper.Callback(){
+    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
         override fun getMovementFlags(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder
@@ -82,17 +82,21 @@ class FavoriteMoviesFragment : Fragment(), OnClickItemCallback {
         ): Boolean = true
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            if(view != null){
+            if (view != null) {
                 val swipePosition = viewHolder.adapterPosition
                 val tvItem = myMovieAdapter.getSwipedData(swipePosition)
                 tvItem?.let { viewModel.setFavorite(it) }
 
-                val mainView = favoriteMoviesFragment.root.rootView.findViewById<BottomNavigationView>(R.id.my_bottom_navigation)
+                val mainView =
+                    favoriteMoviesFragment.root.rootView.findViewById<BottomNavigationView>(R.id.my_bottom_navigation)
 
-                val snackbar = Snackbar.make(view as View, "Batalkan menghapus item sebelumnya?", Snackbar.LENGTH_LONG)
+                val snackbar = Snackbar.make(
+                    view as View,
+                    "Batalkan menghapus item sebelumnya?",
+                    Snackbar.LENGTH_LONG
+                )
                 snackbar.setAnchorView(mainView)
-                snackbar.setAction("OK"){
-                        v ->
+                snackbar.setAction("OK") { v ->
                     tvItem?.let { viewModel.setFavorite(it) }
                 }
                 snackbar.show()

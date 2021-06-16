@@ -1,10 +1,10 @@
 package id.interconnect.moviesandtv.ui.favorite
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import id.interconnect.moviesandtv.databinding.FragmentFavoritesBinding
 import id.interconnect.moviesandtv.ui.home.SectionPagerAdapter
 
@@ -17,7 +17,7 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        fragmentFavorite = FragmentFavoritesBinding.inflate(layoutInflater,container,false)
+        fragmentFavorite = FragmentFavoritesBinding.inflate(layoutInflater, container, false)
         return fragmentFavorite.root
     }
 

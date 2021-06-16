@@ -118,7 +118,7 @@ class RemoteDataSource {
         return resultPopularTV
     }
 
-    fun getDetailTV(id: Int) : LiveData<ApiResponse<DetailTV>> {
+    fun getDetailTV(id: Int): LiveData<ApiResponse<DetailTV>> {
         val call = postApiInterface.getDetailTV(id, BuildConfig.MY_API_KEY)
         val resultDetailTV = MutableLiveData<ApiResponse<DetailTV>>()
         EspressoIdlingResource.increment()

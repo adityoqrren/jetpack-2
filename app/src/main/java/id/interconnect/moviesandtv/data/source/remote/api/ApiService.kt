@@ -12,23 +12,23 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("movie/popular")
     fun getPopularMovies(
-        @Query("api_key") api_key:String
-    ) : Call<AllMoviesResponse>
+        @Query("api_key") api_key: String
+    ): Call<AllMoviesResponse>
 
     @GET("movie/{id}")
     fun getDetailMovie(
-        @Path("id") id:Int,
-        @Query("api_key") api_key:String
-    ) : Call<DetailMovie>
+        @Path("id") id: Int,
+        @Query("api_key") api_key: String
+    ): Call<DetailMovie>
 
     @GET("tv/popular")
-    fun getPopularTV (
-        @Query("api_key") api_key:String
-    ) : Call<AllTVResponse>
+    fun getPopularTV(
+        @Query("api_key") api_key: String
+    ): Call<AllTVResponse>
 
     @GET("tv/{id}")
     fun getDetailTV(
-        @Path("id") id:Int,
-        @Query("api_key") api_key:String
-    ) : Call<DetailTV>
+        @Path("id") id: Int,
+        @Query("api_key") api_key: String
+    ): Call<DetailTV>
 }

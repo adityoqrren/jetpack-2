@@ -1,6 +1,5 @@
 package id.interconnect.moviesandtv.ui.tv
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -18,19 +17,19 @@ class TVViewModel(private val repository: MovieTVRepository) : ViewModel() {
         return repository.getPopularTV()
     }
 
-    fun setSelectedTVItem(id: Int){
+    fun setSelectedTVItem(id: Int) {
         this.detailTVId.value = id
     }
 
-    var detailTV: LiveData<Resource<TVItemEntity>> = Transformations.switchMap(detailTVId){
-            tvId -> repository.getDetailTV(tvId)
+    var detailTV: LiveData<Resource<TVItemEntity>> = Transformations.switchMap(detailTVId) { tvId ->
+        repository.getDetailTV(tvId)
     }
 
-    fun setFavorite(){
+    fun setFavorite() {
         val tvItem = detailTV.value
-        if(tvItem != null){
+        if (tvItem != null) {
             val tvItemData = tvItem.data
-            if(tvItemData != null){
+            if (tvItemData != null) {
                 val newState = !tvItemData.favorited
                 repository.setFavoriteTv(tvItemData, newState)
             }

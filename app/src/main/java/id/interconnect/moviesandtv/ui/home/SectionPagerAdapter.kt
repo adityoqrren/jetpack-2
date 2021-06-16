@@ -9,10 +9,11 @@ import id.interconnect.moviesandtv.R
 import id.interconnect.moviesandtv.ui.favorite.FavoriteMoviesFragment
 import id.interconnect.moviesandtv.ui.favorite.FavoriteTVFragment
 
-class SectionPagerAdapter(private val mContext:Context, fm:FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
-    companion object{
+class SectionPagerAdapter(private val mContext: Context, fm: FragmentManager) :
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    companion object {
         @StringRes
-        private val TAB_TITLES = intArrayOf(R.string.tab_title_movie,R.string.tab_title_tv)
+        private val TAB_TITLES = intArrayOf(R.string.tab_title_movie, R.string.tab_title_tv)
     }
 
     override fun getPageTitle(position: Int): CharSequence {
@@ -20,9 +21,9 @@ class SectionPagerAdapter(private val mContext:Context, fm:FragmentManager) : Fr
     }
 
     override fun getItem(position: Int): Fragment =
-        when(position){
-            0->FavoriteMoviesFragment()
-            1->FavoriteTVFragment()
+        when (position) {
+            0 -> FavoriteMoviesFragment()
+            1 -> FavoriteTVFragment()
             else -> Fragment()
         }
 

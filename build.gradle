@@ -24,6 +24,10 @@ buildscript {
         glideVersion = '4.11.0'
         archLifecycleVersion = '2.2.0'
 
+        retrofitVersion = '2.6.1'
+        okhttpVersion = '3.12.0'
+        okhttploggingVersion = '3.10.0'
+
     }
     repositories {
         google()

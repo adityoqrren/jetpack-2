@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.interconnect.moviesandtv.R
 import id.interconnect.moviesandtv.data.source.local.entity.MovieItemEntity
-import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
 import id.interconnect.moviesandtv.databinding.MovieListItemBinding
 import id.interconnect.moviesandtv.ui.home.OnClickItemCallback
 import id.interconnect.moviesandtv.utils.DateUtil
@@ -17,13 +16,19 @@ import id.interconnect.moviesandtv.utils.DateUtil
 class MovieListAdapter(private val itemClick: OnClickItemCallback) :
     PagedListAdapter<MovieItemEntity, MovieListAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    companion object{
-        private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<MovieItemEntity>(){
-            override fun areContentsTheSame(oldItem: MovieItemEntity, newItem: MovieItemEntity): Boolean {
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieItemEntity>() {
+            override fun areContentsTheSame(
+                oldItem: MovieItemEntity,
+                newItem: MovieItemEntity
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areItemsTheSame(oldItem: MovieItemEntity, newItem: MovieItemEntity): Boolean {
+            override fun areItemsTheSame(
+                oldItem: MovieItemEntity,
+                newItem: MovieItemEntity
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
         }

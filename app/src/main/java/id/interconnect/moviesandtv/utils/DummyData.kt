@@ -1,7 +1,8 @@
 package id.interconnect.moviesandtv.utils
 
-import android.graphics.Movie
-import id.interconnect.moviesandtv.data.*
+import id.interconnect.moviesandtv.data.Genre
+import id.interconnect.moviesandtv.data.Producer
+import id.interconnect.moviesandtv.data.ProductionCompanies
 import id.interconnect.moviesandtv.data.source.local.entity.MovieItemEntity
 import id.interconnect.moviesandtv.data.source.local.entity.TVItemEntity
 import org.json.JSONException
@@ -48,12 +49,14 @@ object DummyData {
                 val poster_path = movie.getString("poster_path")
                 val overview = movie.getString("overview")
 
-                val movieItemResponse = MovieItemEntity(id=id,
-                    original_title= title,
+                val movieItemResponse = MovieItemEntity(
+                    id = id,
+                    original_title = title,
                     vote_average = vote_average,
                     release_date = release_date,
                     poster_path = poster_path,
-                    overview = overview)
+                    overview = overview
+                )
                 listMovie.add(movieItemResponse)
             }
         } catch (e: JSONException) {
@@ -78,7 +81,14 @@ object DummyData {
                 val first_air_date = tv.getString("first_air_date")
                 val overview = tv.getString("overview")
 
-                val tvItemResponse = TVItemEntity(id=id, original_name=original_name, vote_average = vote_average, poster_path = poster_path, first_air_date = first_air_date,overview = overview)
+                val tvItemResponse = TVItemEntity(
+                    id = id,
+                    original_name = original_name,
+                    vote_average = vote_average,
+                    poster_path = poster_path,
+                    first_air_date = first_air_date,
+                    overview = overview
+                )
                 listTV.add(tvItemResponse)
             }
         } catch (e: JSONException) {
@@ -200,7 +210,6 @@ object DummyData {
 
         return detailTV as TVItemEntity
     }
-
 
 
 }

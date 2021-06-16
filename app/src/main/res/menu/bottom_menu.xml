@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/movie_menu"
-        android:title="Movies"
+        android:title="@string/tab_title_movie"
         android:icon="@drawable/ic_movie"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/tvshows_menu"
-        android:title="TV Shows"
+        android:title="@string/tab_title_tv"
         android:icon="@drawable/ic_tv"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/favorite_menu"
-        android:title="Favorites"
+        android:title="@string/menu_title_favorites"
         android:icon="@drawable/ic_favorite"
         app:showAsAction="ifRoom"/>
 </menu>

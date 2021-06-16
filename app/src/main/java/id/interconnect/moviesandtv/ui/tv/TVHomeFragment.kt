@@ -26,19 +26,23 @@ class TVHomeFragment : Fragment(), OnClickItemCallback {
         return fragmentTVHomeFragment.root
     }
 
-    override fun onViewCreated(view:View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val actionbar = activity?.actionBar
-        actionbar?.title = "Popular TV Shows"
+//        val actionbar = activity?.actionBar
+//        actionbar?.title = "Popular TV Shows"
 
         if (activity != null) {
             val viewModel =
-                ViewModelProvider(this, ViewModelFactory.getInstance(requireContext()))[TVViewModel::class.java]
+                ViewModelProvider(
+                    this,
+                    ViewModelFactory.getInstance(requireContext())
+                )[TVViewModel::class.java]
             val myTVAdapter = TVListAdapter(this)
             viewModel.getPopularTV().observe(viewLifecycleOwner, { dataTVList ->
-                if(dataTVList!=null){
-                    when(dataTVList.status){
-                        Status.LOADING -> fragmentTVHomeFragment.tvProgressbar.visibility = View.VISIBLE
+                if (dataTVList != null) {
+                    when (dataTVList.status) {
+                        Status.LOADING -> fragmentTVHomeFragment.tvProgressbar.visibility =
+                            View.VISIBLE
                         Status.SUCCESS -> {
                             fragmentTVHomeFragment.tvProgressbar.visibility = View.GONE
                             myTVAdapter.submitList(dataTVList.data)

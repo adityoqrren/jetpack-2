@@ -13,10 +13,9 @@ import id.interconnect.moviesandtv.utils.DateUtil
 
 class TVListAdapter(val onClickItemCallback: OnClickItemCallback) :
     PagedListAdapter<TVItemEntity, TVListAdapter.MyViewHolder>(DIFF_CALLBACK) {
-//    var tvList = emptyList<DetailTV>()
 
-    companion object{
-        private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<TVItemEntity>(){
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TVItemEntity>() {
             override fun areContentsTheSame(oldItem: TVItemEntity, newItem: TVItemEntity): Boolean {
                 return oldItem.id == newItem.id
             }
@@ -49,10 +48,6 @@ class TVListAdapter(val onClickItemCallback: OnClickItemCallback) :
         val layout = TvListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(layout)
     }
-
-//    override fun getItemCount(): Int {
-//        return tvList.size
-//    }
 
     fun getSwipedData(swippedPosition: Int): TVItemEntity? = getItem(swippedPosition)
 

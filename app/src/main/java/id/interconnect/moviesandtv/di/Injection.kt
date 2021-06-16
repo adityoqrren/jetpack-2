@@ -8,7 +8,7 @@ import id.interconnect.moviesandtv.data.source.remote.response.RemoteDataSource
 import id.interconnect.moviesandtv.utils.AppExecutors
 
 object Injection {
-    fun provideRepository(context: Context) : MovieTVRepository {
+    fun provideRepository(context: Context): MovieTVRepository {
         val database = MovieTVDatabase.getInstance(context)
         val remoteDataSource = RemoteDataSource.getInstance()
         val localDataSource = LocalDataSource.getInstance(database.movieTVDao())

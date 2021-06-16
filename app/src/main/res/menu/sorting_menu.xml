@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_sorting"
+        android:title="@string/sort_from"
+        android:icon="@drawable/ic_sort"
+        app:showAsAction="always">
+        <!-- "file" submenu -->
+        <menu>
+            <group
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_sort_highest_rating"
+                    android:checked="true"
+                    android:title="@string/highest_rating" />
+                <item
+                    android:id="@+id/menu_sort_lowest_rating"
+                    android:checked="false"
+                    android:title="@string/lowest_rating" />
+            </group>
+        </menu>
+    </item>
+</menu>

@@ -6,7 +6,7 @@ import id.interconnect.moviesandtv.utils.ListToString
 
 class Converters {
     @TypeConverter
-    fun ListGenreToString(listGenre: List<Genre>): String{
+    fun ListGenreToString(listGenre: List<Genre>): String {
         return ListToString.GenresToString(listGenre)
     }
 }

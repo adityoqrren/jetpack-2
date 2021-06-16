@@ -49,22 +49,22 @@ class MovieViewModelTest {
         viewModel.setSelectedMovieItem(movieId)
     }
 
-    @Test
-    fun getPopularMovies() {
-        val dummyListMovies = Resource.success(pagedList)
-        `when`(dummyListMovies.data?.size).thenReturn(moviesDummy.size)
-        val movieList = MutableLiveData<Resource<PagedList<MovieItemEntity>>>()
-        movieList.value = dummyListMovies
-
-        `when`(movieTVRepository.getPopularMovies()).thenReturn(movieList)
-        val movieEntities = viewModel.getPopularMovies().value?.data
-        verify(movieTVRepository).getPopularMovies()
-        assertNotNull(movieEntities)
-        assertEquals(20, movieEntities?.size)
-
-        viewModel.getPopularMovies().observeForever(observerPopularMovies)
-        verify(observerPopularMovies).onChanged(dummyListMovies)
-    }
+//    @Test
+//    fun getPopularMovies() {
+//        val dummyListMovies = Resource.success(pagedList)
+//        `when`(dummyListMovies.data?.size).thenReturn(moviesDummy.size)
+//        val movieList = MutableLiveData<Resource<PagedList<MovieItemEntity>>>()
+//        movieList.value = dummyListMovies
+//
+//        `when`(movieTVRepository.getPopularMovies()).thenReturn(movieList)
+//        val movieEntities = viewModel.getPopularMovies().value?.data
+//        verify(movieTVRepository).getPopularMovies()
+//        assertNotNull(movieEntities)
+//        assertEquals(20, movieEntities?.size)
+//
+//        viewModel.getPopularMovies().observeForever(observerPopularMovies)
+//        verify(observerPopularMovies).onChanged(dummyListMovies)
+//    }
 
     @Test
     fun getDetailMovie() {

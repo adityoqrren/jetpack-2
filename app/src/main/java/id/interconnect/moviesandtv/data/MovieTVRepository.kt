@@ -10,27 +10,36 @@ import id.interconnect.moviesandtv.data.source.remote.response.ApiResponse
 import id.interconnect.moviesandtv.data.source.remote.response.RemoteDataSource
 import id.interconnect.moviesandtv.utils.AppExecutors
 import id.interconnect.moviesandtv.utils.ListToString
+import id.interconnect.moviesandtv.utils.SortUtils
 import id.interconnect.moviesandtv.vo.Resource
 
 class MovieTVRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
-    ) : MovieTVDataSource {
+) : MovieTVDataSource {
     companion object {
         @Volatile
         private var instance: MovieTVRepository? = null
 
-        fun getInstance(remoteDataSource: RemoteDataSource, localDataSource: LocalDataSource, appExecutors: AppExecutors): MovieTVRepository =
+        fun getInstance(
+            remoteDataSource: RemoteDataSource,
+            localDataSource: LocalDataSource,
+            appExecutors: AppExecutors
+        ): MovieTVRepository =
             instance ?: synchronized(this) {
-                instance ?: MovieTVRepository(remoteDataSource, localDataSource, appExecutors).apply {
+                instance ?: MovieTVRepository(
+                    remoteDataSource,
+                    localDataSource,
+                    appExecutors
+                ).apply {
                     instance = this
                 }
             }
     }
 
     override fun getPopularTV(): LiveData<Resource<PagedList<TVItemEntity>>> {
-        return object : NetworkBoundResource<PagedList<TVItemEntity>, List<TVItem>>(appExecutors){
+        return object : NetworkBoundResource<PagedList<TVItemEntity>, List<TVItem>>(appExecutors) {
             override fun loadFromDB(): LiveData<PagedList<TVItemEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
@@ -50,7 +59,7 @@ class MovieTVRepository private constructor(
 
             override fun saveCallResult(data: List<TVItem>) {
                 val tvList = ArrayList<TVItemEntity>()
-                for(item in data){
+                for (item in data) {
                     val tvItem = TVItemEntity(
                         id = item.id,
                         original_name = item.original_name,
@@ -69,20 +78,20 @@ class MovieTVRepository private constructor(
 
 
     override fun getDetailTV(id: Int): LiveData<Resource<TVItemEntity>> {
-        return object: NetworkBoundResource<TVItemEntity, DetailTV>(appExecutors){
+        return object : NetworkBoundResource<TVItemEntity, DetailTV>(appExecutors) {
             override fun loadFromDB(): LiveData<TVItemEntity> =
                 localDataSource.getDetailTV(id)
 
 
             override fun shouldFetch(data: TVItemEntity?): Boolean =
-                data?.original_language == "" && data.popularity == 0.0  && data.number_of_episodes == 0
+                data?.original_language == "" && data.popularity == 0.0 && data.number_of_episodes == 0
 
 
             override fun createCall(): LiveData<ApiResponse<DetailTV>> =
                 remoteDataSource.getDetailTV(id)
 
 
-            override fun saveCallResult(data: DetailTV){
+            override fun saveCallResult(data: DetailTV) {
                 val tvItemEntity = TVItemEntity(
                     data.id,
                     data.original_name,
@@ -109,22 +118,29 @@ class MovieTVRepository private constructor(
             .setInitialLoadSizeHint(4)
             .setPageSize(4)
             .build()
-        return LivePagedListBuilder(localDataSource.getFavoriteTV(),config).build()
+        return LivePagedListBuilder(localDataSource.getFavoriteTV(), config).build()
     }
 
     override fun setFavoriteTv(tvItemEntity: TVItemEntity, state: Boolean) {
-        appExecutors.diskIO().execute{localDataSource.setFavoriteTV(tvItemEntity, state)}
+        appExecutors.diskIO().execute { localDataSource.setFavoriteTV(tvItemEntity, state) }
     }
 
-    override fun getPopularMovies(): LiveData<Resource<PagedList<MovieItemEntity>>> {
-        return object : NetworkBoundResource<PagedList<MovieItemEntity>, List<MovieItem>>(appExecutors){
+    override fun getPopularMovies(sort: String): LiveData<Resource<PagedList<MovieItemEntity>>> {
+        return object :
+            NetworkBoundResource<PagedList<MovieItemEntity>, List<MovieItem>>(appExecutors) {
             override fun loadFromDB(): LiveData<PagedList<MovieItemEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
                     .setInitialLoadSizeHint(4)
                     .setPageSize(4)
                     .build()
-                return LivePagedListBuilder(localDataSource.getPopularMovies(), config).build()
+                return LivePagedListBuilder(
+                    localDataSource.getPopularMovies(
+                        SortUtils.getSortedQuery(
+                            sort
+                        )
+                    ), config
+                ).build()
             }
 
             override fun shouldFetch(data: PagedList<MovieItemEntity>?): Boolean =
@@ -137,7 +153,7 @@ class MovieTVRepository private constructor(
 
             override fun saveCallResult(data: List<MovieItem>) {
                 val movieList = ArrayList<MovieItemEntity>()
-                for(item in data){
+                for (item in data) {
                     val movieItem = MovieItemEntity(
                         id = item.id,
                         original_title = item.title,
@@ -155,7 +171,7 @@ class MovieTVRepository private constructor(
     }
 
     override fun getDetailMovie(id: Int): LiveData<Resource<MovieItemEntity>> {
-        return object: NetworkBoundResource<MovieItemEntity, DetailMovie>(appExecutors){
+        return object : NetworkBoundResource<MovieItemEntity, DetailMovie>(appExecutors) {
             override fun loadFromDB(): LiveData<MovieItemEntity> =
                 localDataSource.getDetailMovie(id)
 
@@ -168,7 +184,7 @@ class MovieTVRepository private constructor(
                 remoteDataSource.getDetailMovie(id)
 
 
-            override fun saveCallResult(data: DetailMovie){
+            override fun saveCallResult(data: DetailMovie) {
                 val movieItemEntity = MovieItemEntity(
                     data.id,
                     ListToString.GenresToString(data.genres),
@@ -194,7 +210,7 @@ class MovieTVRepository private constructor(
             .setInitialLoadSizeHint(4)
             .setPageSize(4)
             .build()
-        return LivePagedListBuilder(localDataSource.getFavoriteMovies(),config).build()
+        return LivePagedListBuilder(localDataSource.getFavoriteMovies(), config).build()
     }
 
     override fun setFavoriteMovie(movieItemEntity: MovieItemEntity, state: Boolean) {

@@ -7,7 +7,7 @@ import id.interconnect.moviesandtv.data.ProductionCompanies
 object ListToString {
     fun ProductionCompaniesToString(production_companies: List<ProductionCompanies>): String {
         var production_companies_string = "-"
-        if(production_companies.isNotEmpty()) {
+        if (production_companies.isNotEmpty()) {
             val companyList = ArrayList<String>()
             for (company in production_companies) {
                 companyList.add(company.name)
@@ -30,7 +30,7 @@ object ListToString {
 
     fun createdByListToString(createdBy: List<Producer>): String {
         var createdByString = "-"
-        if(createdBy.isNotEmpty()) {
+        if (createdBy.isNotEmpty()) {
             val createdByList = ArrayList<String>()
             for (producer in createdBy) {
                 createdByList.add(producer.name)
